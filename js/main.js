@@ -5,11 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-  // ==========================================
-  // 1. CSV LOADING LOGIC (Added)
-  // ==========================================
-  
-  // Load the CSV immediately when the page loads
   loadCityData();
 
   async function loadCityData() {
@@ -25,19 +20,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function populateCityDropdown(csvText) {
-    // Clear the loading message
     citySelect.innerHTML = '<option value="" disabled selected>Select a city...</option>';
 
     const lines = csvText.split(/\r?\n/);
 
-    // Skip header (i = 1)
     for (let i = 1; i < lines.length; i++) {
       const line = lines[i].trim();
       if (!line) continue;
 
       const parts = line.split(',');
       if (parts.length >= 4) {
-        // CSV: latitude,longitude,city,country
         const lat = parts[0].trim();
         const lon = parts[1].trim();
         const city = parts[2].trim();
@@ -51,10 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ==========================================
-  // 2. YOUR WEATHER LOGIC (Preserved)
-  // ==========================================
-
   searchBtn.addEventListener("click", () => {
     const value = citySelect.value;
     if (!value) return alert("Please select a city!");
@@ -63,8 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   async function fetchWeather(lat, lon) {
-    // Note: If you host this on HTTPS (like Netlify/Vercel), you must change http to https below
-    const url = `http://www.7timer.info/bin/civillight.php?lat=${lat}&lon=${lon}&ac=0&unit=metric&output=json&tzshift=0`;
+    const url = `https://www.7timer.info/bin/civillight.php?lat=${lat}&lon=${lon}&ac=0&unit=metric&output=json&tzshift=0`;
     
     try {
       const response = await fetch(url);
@@ -141,7 +128,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const weatherCard = document.createElement("div");
       weatherCard.classList.add("weather-card");
       
-      // Fixed: changed classname="date" to class="date"
       weatherCard.innerHTML = `
         <h3 class="date">${dayName}, ${formattedDate}</h3>
         <img src="${icon}" alt="${title}">

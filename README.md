@@ -14,7 +14,7 @@
   </p>
   
   <h4>
-    <a href="#">View Live Demo</a>
+    <a href="https://sahilbhutto.github.io/EuroWeather/">View Live Demo</a>
     <span> · </span>
     <a href="#how-to-use">Documentation</a>
     <span> · </span>
