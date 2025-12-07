@@ -50,18 +50,23 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchWeather(lat, lon);
   });
 
-  async function fetchWeather(lat, lon) {
-    const url = `https://www.7timer.info/bin/civillight.php?lat=${lat}&lon=${lon}&ac=0&unit=metric&output=json&tzshift=0`;
-    
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      displayWeather(data.dataseries);
-    } catch (err) {
-      console.error(err);
-      alert("Failed to fetch weather data");
-    }
+ async function fetchWeather(lat, lon) {
+  const apiUrl = `http://www.7timer.info/bin/civillight.php?lat=${lat}&lon=${lon}&ac=0&unit=metric&output=json&tzshift=0`;
+
+  const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(apiUrl)}`;
+
+  try {
+    const response = await fetch(proxyUrl);
+    if (!response.ok) throw new Error("Failed to fetch weather data");
+
+    const data = await response.json();
+    displayWeather(data.dataseries);
+  } catch (err) {
+    console.error(err);
+    alert("Failed to fetch weather data. Please try again later.");
   }
+}
+
 
   function getWeatherInfo(weatherString) {
     let title = "";
